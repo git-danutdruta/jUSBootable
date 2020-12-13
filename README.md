@@ -1,2 +1,2 @@
 # jUSBootable
-jUSBootable it's a Java Swing app usefull for creating bootable USB flash drivers
+jUSBootable it's a Java Swing app useful for creating bootable USB flash drivers
