@@ -23,7 +23,7 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 
-    <description>jUSBootable it's a Java Swing app useful for creating bootable USB flash drivers</description>
+    <description>jUSBootable it's a Java Swing app useful for creating bootable USB flash drives</description>
 
     <developers>
         <developer>
