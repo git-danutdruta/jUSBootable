@@ -6,13 +6,18 @@ package ro.rainy.jusbootable.model.domain;
  * @data: 15/12/2020__23:57
  */
 public enum FileSystemType {
-    EX_FAT("exFAT"),
     FAT32("FAT32"),
+    EX_FAT("exFAT"),
     NTFS("NTFS");
 
     String description;
 
     FileSystemType(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 }
