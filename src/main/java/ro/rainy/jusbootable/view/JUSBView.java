@@ -3,6 +3,7 @@ package ro.rainy.jusbootable.view;
 import ro.rainy.jusbootable.handler.ButtonClickHandler;
 import ro.rainy.jusbootable.handler.SelectionChangeHandler;
 import ro.rainy.jusbootable.model.BComboModel;
+import ro.rainy.jusbootable.model.BFileChooserModel;
 import ro.rainy.jusbootable.model.domain.*;
 
 import java.awt.*;
@@ -15,7 +16,11 @@ import java.awt.*;
 public interface JUSBView extends Structure {
     void setVisible(boolean visible);
 
+    void setBootSelectionFileChooserVisible();
+
     void setIconImage(Image image);
+
+    void setBootSelectionTxt(String fileName);
 
     void setUSBComboBoxModel(BComboModel<FlashDrive> usbComboBoxModel);
 
@@ -26,6 +31,8 @@ public interface JUSBView extends Structure {
     void setFileSystemComboBoxModel(BComboModel<FileSystemType> fileSystemComboBoxModel);
 
     void setClusterComboBoxModel(BComboModel<ClusterSize> fileSystemComboBoxModel);
+
+    void setFileChooserModel(BFileChooserModel fileChooserModel);
 
 
     void whenUserClickStartButton(ButtonClickHandler startHandler);
