@@ -1,7 +1,11 @@
 package ro.rainy.jusbootable.model;
 
+import ro.rainy.jusbootable.handler.ExceptionThrownHandler;
+import ro.rainy.jusbootable.handler.UpdateSelectionHandler;
 import ro.rainy.jusbootable.handler.VisibilityChangeHandler;
 import ro.rainy.jusbootable.model.domain.*;
+
+import java.awt.image.BufferedImage;
 
 /**
  * @proiect: jUSBootable
@@ -9,6 +13,10 @@ import ro.rainy.jusbootable.model.domain.*;
  * @data: 14/12/2020__19:12
  */
 public interface JUSBModel {
+    void whenExceptionThrown(ExceptionThrownHandler exceptionThrownHandler);
+
+    void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler);
+
     void whenVisibilityChange(VisibilityChangeHandler visibilityChangeHandler);
 
     void setVisible(boolean visible);
@@ -24,4 +32,12 @@ public interface JUSBModel {
     BComboModel<FileSystemType> getFileSystemTypeComboModel();
 
     BComboModel<ClusterSize> getClusterComboModel();
+
+    BFileChooserModel getFileChooserModel();
+
+    BufferedImage getLogo();
+
+    void updateSelection();
+
+    void prepareExit();
 }
