@@ -4,6 +4,7 @@ import ro.rainy.jusbootable.handler.ButtonClickHandler;
 import ro.rainy.jusbootable.handler.SelectionChangeHandler;
 import ro.rainy.jusbootable.model.BComboModel;
 import ro.rainy.jusbootable.model.BFileChooserModel;
+import ro.rainy.jusbootable.model.BProgressBarBoundedRangeModel;
 import ro.rainy.jusbootable.model.domain.*;
 
 import java.awt.*;
@@ -14,9 +15,13 @@ import java.awt.*;
  * @data: 14/12/2020__19:08
  */
 public interface JUSBView extends Structure {
+    void showException(Throwable throwable);
+
     void setVisible(boolean visible);
 
     void setBootSelectionFileChooserVisible();
+
+    void setStartBtnEnables(boolean enabled);
 
     void setIconImage(Image image);
 
@@ -33,6 +38,8 @@ public interface JUSBView extends Structure {
     void setClusterComboBoxModel(BComboModel<ClusterSize> fileSystemComboBoxModel);
 
     void setFileChooserModel(BFileChooserModel fileChooserModel);
+
+    void setProgressBarModel(BProgressBarBoundedRangeModel boundedRangeModel);
 
 
     void whenUserClickStartButton(ButtonClickHandler startHandler);
