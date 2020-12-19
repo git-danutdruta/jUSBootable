@@ -21,6 +21,8 @@
         <slf4j.version>2.0.0-alpha1</slf4j.version>
         <log4j-core.version>2.14.0</log4j-core.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <usbdrivedetector.version>2.1.1</usbdrivedetector.version>
     </properties>
 
     <description>jUSBootable it's a Java Swing app useful for creating bootable USB flash drives</description>
@@ -78,6 +80,19 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.samuelcampos</groupId>
+            <artifactId>usbdrivedetector</artifactId>
+            <version>${usbdrivedetector.version}</version>
         </dependency>
     </dependencies>
 
