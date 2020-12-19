@@ -8,4 +8,5 @@ import javax.swing.*;
  * @data: 14/12/2020__14:42
  */
 public interface BComboModel<T> extends ComboBoxModel<T> {
+    void addElement(T element);
 }
