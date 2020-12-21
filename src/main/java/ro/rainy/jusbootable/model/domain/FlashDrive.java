@@ -2,6 +2,8 @@ package ro.rainy.jusbootable.model.domain;
 
 import net.samuelcampos.usbdrivedetector.USBStorageDevice;
 
+import java.util.Objects;
+
 /**
  * @proiect: jUSBootable
  * @autor: daniel
@@ -28,5 +30,19 @@ public class FlashDrive {
     @Override
     public String toString() {
         return deviceName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FlashDrive that = (FlashDrive) o;
+        return Objects.equals(deviceName, that.deviceName) &&
+                Objects.equals(uuid, that.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deviceName, uuid);
     }
 }

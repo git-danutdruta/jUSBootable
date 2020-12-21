@@ -9,4 +9,5 @@ import javax.swing.*;
  */
 public interface BComboModel<T> extends ComboBoxModel<T> {
     void addElement(T element);
+    void removeElement(T element);
 }
