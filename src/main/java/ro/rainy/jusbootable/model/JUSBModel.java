@@ -35,9 +35,15 @@ public interface JUSBModel {
 
     BFileChooserModel getFileChooserModel();
 
+    BProgressBarBoundedRangeModel getProgressBarModel();
+
     BufferedImage getLogo();
 
     void updateSelection();
+
+    void checkDeviceListForUpdates();
+
+    void makeUSBootable();
 
     void prepareExit();
 }
