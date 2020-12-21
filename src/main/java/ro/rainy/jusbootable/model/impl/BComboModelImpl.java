@@ -17,12 +17,4 @@ public class BComboModelImpl<T> extends DefaultComboBoxModel<T> implements BComb
     public BComboModelImpl(T[] items) {
         super(items);
     }
-
-    @Override
-    public void addElement(T anObject) {
-        removeElement(anObject);
-        super.addElement(anObject);
-    }
-
-
 }
