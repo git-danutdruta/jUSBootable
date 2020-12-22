@@ -12,6 +12,7 @@ public class JUSBCoordinator {
 
         applicationStarter.whenApplicationStart(() -> {
             jUsbModel.setVisible(true);
+            jUsbModel.checkDeviceListForUpdates();
         });
     }
 }
