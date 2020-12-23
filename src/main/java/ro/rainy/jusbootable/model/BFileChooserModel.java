@@ -9,5 +9,6 @@ import java.io.File;
  */
 public interface BFileChooserModel {
     void setSelectedFile(File file);
+
     File getSelectedFile();
 }
