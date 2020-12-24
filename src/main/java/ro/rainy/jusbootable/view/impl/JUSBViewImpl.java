@@ -11,6 +11,8 @@ import ro.rainy.jusbootable.view.JUSBView;
 import ro.rainy.jusbootable.view.component.BFileChooser;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
 /**
@@ -101,6 +103,9 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
 
     private void setUpDevicePanel() {
         devicePanel.setBorder(BorderFactory.createTitledBorder("Device"));
+        FileFilter filter = new FileNameExtensionFilter("Allowed file .iso ", "iso");
+        bootSelectionFileChooser.setAcceptAllFileFilterUsed(false);
+        bootSelectionFileChooser.setFileFilter(filter);
     }
 
     private void setUpFormatPanel() {
