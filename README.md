@@ -1,4 +1,3 @@
-# Template:
 [![<Rainy>](https://img.shields.io/circleci/build/gh/git-danutdruta/jUSBootable?style=plastic&token=06b2cbd9d2dba02e3a8315045fd1a58cd5144602)]()
 
 # jUSBootable
