@@ -1,3 +1,6 @@
+# Template:
+[![<Rainy>](https://circleci.com/gh/git-danutdruta/jUSBootable.svg?style=shield)]()
+
 # jUSBootable
 jUSBootable it's a Java Swing app useful for creating bootable USB flash drivers
 
