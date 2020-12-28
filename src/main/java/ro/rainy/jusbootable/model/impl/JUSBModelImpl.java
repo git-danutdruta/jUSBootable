@@ -2,8 +2,11 @@ package ro.rainy.jusbootable.model.impl;
 
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.events.DeviceEventType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ro.rainy.jusbootable.dispatcher.EventDispatcher;
 import ro.rainy.jusbootable.handler.ExceptionThrownHandler;
+import ro.rainy.jusbootable.handler.InfoDataHandler;
 import ro.rainy.jusbootable.handler.UpdateSelectionHandler;
 import ro.rainy.jusbootable.handler.VisibilityChangeHandler;
 import ro.rainy.jusbootable.model.BComboModel;
@@ -23,8 +26,11 @@ import java.io.IOException;
  * @data: 14/12/2020__19:13
  */
 public class JUSBModelImpl implements JUSBModel {
+    private static final Logger LOG = LoggerFactory.getLogger(JUSBModelImpl.class);
+
     private final EventDispatcher<VisibilityChangeHandler> visibilityChangeHandlerEventDispatcher;
     private final EventDispatcher<ExceptionThrownHandler> exceptionThrownHandlerEventDispatcher;
+    private final EventDispatcher<InfoDataHandler> infoDataHandlerEventDispatcher;
     private final EventDispatcher<UpdateSelectionHandler> updateSelectionEventDispatcher;
     private final BComboModel<FlashDrive> usbComboModel;
     private final BComboModel<PartitionSchemeType> partitionSchemeComboModel;
@@ -37,6 +43,7 @@ public class JUSBModelImpl implements JUSBModel {
 
     public JUSBModelImpl() {
         exceptionThrownHandlerEventDispatcher = new EventDispatcher<>("exceptionThrown");
+        infoDataHandlerEventDispatcher = new EventDispatcher<>("pushDataToGUI");
         visibilityChangeHandlerEventDispatcher = new EventDispatcher<>("visibilityChange");
         updateSelectionEventDispatcher = new EventDispatcher<>("updateSelection");
         usbComboModel = new BComboModelImpl<>();
@@ -132,11 +139,14 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void checkDeviceListForUpdates() {
+        LOG.info("Initiate flash drives checker");
         USBDeviceDetectorManager driveDetector = new USBDeviceDetectorManager(2500L);
+        LOG.debug("Register listener for new coming events");
         driveDetector.addDriveListener(event -> {
             final FlashDrive element = new FlashDrive(event.getStorageDevice());
             usbComboModel.removeElement(element);
             if (event.getEventType() == DeviceEventType.CONNECTED) {
+                LOG.debug("New device connected: {}", element);
                 usbComboModel.addElement(element);
             }
         });
@@ -144,11 +154,12 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void makeUSBootable() {
-
     }
 
     @Override
     public void prepareExit() {
+        LOG.info("Shutdown signal ...");
+        LOG.debug("======================================================\n");
         System.exit(0);
     }
 }
