@@ -17,6 +17,8 @@ import java.awt.*;
 public interface JUSBView extends Structure {
     void showException(Throwable throwable);
 
+    void showInfo(String message);
+
     void setVisible(boolean visible);
 
     void setBootSelectionFileChooserVisible();
