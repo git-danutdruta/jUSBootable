@@ -66,14 +66,21 @@ public class JUSBModelImpl implements JUSBModel {
     }
 
     @Override
+    public void whenInfoSend(InfoDataHandler infoDataHandler) {
+        infoDataHandlerEventDispatcher.addListener(infoDataHandler);
+    }
+
+    @Override
     public void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler) {
         updateSelectionEventDispatcher.addListener(updateSelectionHandler);
     }
 
     @Override
     public void setVisible(boolean visible) {
+        LOG.debug("Set frame visible: {}", visible);
         this.frameVisible = visible;
         visibilityChangeHandlerEventDispatcher.dispatch();
+        infoDataHandlerEventDispatcher.dispatch("just a message");
     }
 
     @Override
