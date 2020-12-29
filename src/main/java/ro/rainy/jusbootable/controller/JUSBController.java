@@ -20,6 +20,7 @@ public class JUSBController {
 
     private void setUp() {
         model.whenExceptionThrown(view::showException);
+        model.whenInfoSend(view::showInfo);
 
         model.whenVisibilityChange(() -> view.setVisible(model.isFrameVisible()));
         model.whenSelectionChange(view::setBootSelectionTxt);
