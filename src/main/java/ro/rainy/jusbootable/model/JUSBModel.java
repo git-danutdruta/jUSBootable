@@ -1,6 +1,7 @@
 package ro.rainy.jusbootable.model;
 
 import ro.rainy.jusbootable.handler.ExceptionThrownHandler;
+import ro.rainy.jusbootable.handler.InfoDataHandler;
 import ro.rainy.jusbootable.handler.UpdateSelectionHandler;
 import ro.rainy.jusbootable.handler.VisibilityChangeHandler;
 import ro.rainy.jusbootable.model.domain.*;
@@ -14,6 +15,8 @@ import java.awt.image.BufferedImage;
  */
 public interface JUSBModel {
     void whenExceptionThrown(ExceptionThrownHandler exceptionThrownHandler);
+
+    void whenInfoSend(InfoDataHandler infoDataHandler);
 
     void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler);
 
