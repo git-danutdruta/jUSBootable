@@ -180,6 +180,11 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
     }
 
     @Override
+    public void showInfo(String message) {
+        JOptionPane.showMessageDialog(null, message, "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
     public void setBootSelectionTxt(String fileName) {
         bootSelectionTxt.setText(fileName);
     }
