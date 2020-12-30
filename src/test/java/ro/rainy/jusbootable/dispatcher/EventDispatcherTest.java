@@ -1,20 +1,17 @@
 package ro.rainy.jusbootable.dispatcher;
 
 import org.jmock.Expectations;
-import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import ro.rainy.jusbootable.ContextHolder;
 
 /**
  * @proiect: jUSBootable
  * @autor: daniel
  * @data: 27/12/2020__23:21
  */
-@RunWith(JUnit4.class)
-public class EventDispatcherTest {
-    JUnit4Mockery context = new JUnit4Mockery();
+public class EventDispatcherTest extends ContextHolder {
+
     private TestListener testListener;
 
     @Before
