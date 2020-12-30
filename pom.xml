@@ -52,13 +52,13 @@
             <version>2.12.0</version>
             <scope>test</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j-core.version}</version>
         </dependency>
-
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
         <dependency>
