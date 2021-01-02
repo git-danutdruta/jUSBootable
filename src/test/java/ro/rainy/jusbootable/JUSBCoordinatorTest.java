@@ -1,6 +1,7 @@
 package ro.rainy.jusbootable;
 
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @proiect: jUSBootable
@@ -16,5 +17,7 @@ public class JUSBCoordinatorTest extends ContextHolder{
         applicationStarter = context.mock(ApplicationStarter.class);
     }
 
+    @Test
+    public void test(){}
 
 }
