@@ -17,8 +17,10 @@ import ro.rainy.jusbootable.model.domain.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @proiect: jUSBootable
@@ -80,7 +82,6 @@ public class JUSBModelImpl implements JUSBModel {
         LOG.debug("Set frame visible: {}", visible);
         this.frameVisible = visible;
         visibilityChangeHandlerEventDispatcher.dispatch();
-        infoDataHandlerEventDispatcher.dispatch("just a message");
     }
 
     @Override
@@ -161,6 +162,95 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void makeUSBootable() {
+
+//        progressBarRangeModel.setValue(95);
+        //todo check if file is set
+        FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
+        if (selectedDrive == null) {
+            exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
+            return;
+        }
+        File file = fileChooserModel.getSelectedFile();
+        if (file == null) {
+            exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
+            return;
+        }
+
+        //OS -Linux sudo dd bs=4M if=path/to/input.iso of=/dev/sd<?> conv=fdatasync  status=progress
+        /*try {
+            String[] cmd = new String[]{
+                    "dd",
+                    "bs=4M",
+                    String.format("if=%s", file.getAbsolutePath()),
+                    String.format("of=%s", selectedDrive.getDevice()),
+            };
+            System.out.println(Arrays.toString(cmd));
+            ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+            Process process = processBuilder.start();
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String str = br.readLine();
+            while (str != null) {
+                System.out.println(str);
+                str = br.readLine();
+            }
+            if (0 == process.waitFor()) {
+                System.out.println("Done");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        ProcessBuilder processBuilder = new ProcessBuilder();
+
+        // -- Linux --
+
+        // Run a shell command
+        processBuilder.command("mkfs.vfat",
+                String.format("if=%s", file.getAbsolutePath()),
+                String.format("of=%s", selectedDrive.getDevice()),
+                "status=progress"
+        );
+        System.out.println(selectedDrive.getDevice());
+        // Run a shell script
+        //processBuilder.command("path/to/hello.sh");
+
+        // -- Windows --
+
+        // Run a command
+        //processBuilder.command("cmd.exe", "/c", "dir C:\\Users\\mkyong");
+
+        // Run a bat file
+        //processBuilder.command("C:\\Users\\mkyong\\hello.bat");
+
+        try {
+
+            Process process = processBuilder.start();
+
+            StringBuilder output = new StringBuilder();
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line + "\n");
+            }
+
+            int exitVal = process.waitFor();
+            if (exitVal == 0) {
+                System.out.println("Success!");
+                System.out.println(output);
+                System.exit(0);
+            } else {
+                //abnormal...
+                System.out.println("Manevra");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
