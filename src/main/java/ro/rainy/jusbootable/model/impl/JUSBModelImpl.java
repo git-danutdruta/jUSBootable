@@ -205,6 +205,9 @@ public class JUSBModelImpl implements JUSBModel {
         // -- Linux --
 
         // Run a shell command
+        //umount
+        //mkfs.vfat
+        //dd
         processBuilder.command("mkfs.vfat",
                 String.format("if=%s", file.getAbsolutePath()),
                 String.format("of=%s", selectedDrive.getDevice()),
