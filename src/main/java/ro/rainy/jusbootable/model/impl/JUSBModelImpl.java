@@ -188,7 +188,17 @@ public class JUSBModelImpl implements JUSBModel {
             if (umountCode == 0) {
                 int mkfsVFatCode = executeProcess("Formatting drive", "mkfs.vfat", deviceIndicativ);
                 if (mkfsVFatCode == 0) {
-
+                    int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
+                            String.format("if=%s", file.getAbsolutePath()),
+                            String.format("of=%s", deviceIndicativ),
+                            "conv=fdatasync",
+                            "status=progress");
+                    if (ddCode == 0) {
+                        progressBarRangeModel.setValue(100);
+                        infoDataHandlerEventDispatcher.dispatch("Operation successful");
+                    } else {
+                        infoDataHandlerEventDispatcher.dispatch("Cannot create bootable flash drive");
+                    }
                 } else {
                     infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Start application as administrator!");
                 }
