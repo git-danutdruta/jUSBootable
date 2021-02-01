@@ -186,7 +186,12 @@ public class JUSBModelImpl implements JUSBModel {
             String deviceIndicativ = selectedDrive.getDevice();
             int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
             if (umountCode == 0) {
+                int mkfsVFatCode = executeProcess("Formatting drive", "mkfs.vfat", deviceIndicativ);
+                if (mkfsVFatCode == 0) {
 
+                } else {
+                    infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Start application as administrator!");
+                }
             } else {
                 infoDataHandlerEventDispatcher.dispatch("Cannot unmount the flash drive");
             }
