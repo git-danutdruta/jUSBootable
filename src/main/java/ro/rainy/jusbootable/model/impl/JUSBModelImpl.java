@@ -191,7 +191,6 @@ public class JUSBModelImpl implements JUSBModel {
                     int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
                             String.format("if=%s", file.getAbsolutePath()),
                             String.format("of=%s", deviceIndicativ),
-                            "conv=fdatasync",
                             "status=progress");
                     if (ddCode == 0) {
                         progressBarRangeModel.setValue(100);
@@ -200,7 +199,7 @@ public class JUSBModelImpl implements JUSBModel {
                         infoDataHandlerEventDispatcher.dispatch("Cannot create bootable flash drive");
                     }
                 } else {
-                    infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Start application as administrator!");
+                    infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Run application as administrator!");
                 }
             } else {
                 infoDataHandlerEventDispatcher.dispatch("Cannot unmount the flash drive");
