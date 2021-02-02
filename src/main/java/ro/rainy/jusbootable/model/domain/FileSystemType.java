@@ -10,7 +10,7 @@ public enum FileSystemType {
     EX_FAT("exFAT"),
     NTFS("NTFS");
 
-    String description;
+    private String description;
 
     FileSystemType(String description) {
         this.description = description;
