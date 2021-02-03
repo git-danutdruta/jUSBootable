@@ -1,4 +1,4 @@
-package ro.rainy.jusbootable.model.domain.os;
+package ro.rainy.jusbootable.model.domain;
 
 /**
  * @project: jUSBootable
