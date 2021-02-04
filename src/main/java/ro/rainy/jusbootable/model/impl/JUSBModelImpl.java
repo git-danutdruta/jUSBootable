@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * @proiect: jUSBootable
@@ -51,7 +52,7 @@ public class JUSBModelImpl implements JUSBModel {
         usbComboModel = new BComboModelImpl<>();
         partitionSchemeComboModel = new BComboModelImpl<>(PartitionSchemeType.values());
         targetSystemComboModel = new BComboModelImpl<>(TargetSystemType.values());
-        fileSystemTypeComboModel = new BComboModelImpl<>(FileSystemType.values());
+        fileSystemTypeComboModel = new BComboModelImpl<>( FileSystemType.getFileSystemTypes());
         clusterComboModel = new BComboModelImpl<>(ClusterSize.values());
         fileChooserModel = new BFileChooserModelImpl();
         progressBarRangeModel = new BProgressBarBoundedRangeModelImpl();
