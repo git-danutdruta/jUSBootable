@@ -33,8 +33,8 @@ public enum FileSystemType {
     }
 
 
-    public static Set<FileSystemType> getFileSystemTypes() {
-        return getFileSystemTypes_().get(getCurrentOS());
+    public static FileSystemType[] getFileSystemTypes() {
+        return getFileSystemTypes_().get(getCurrentOS()).toArray(new FileSystemType[0]);
     }
 
     private static Map<OperatingSystem, Set<FileSystemType>> getFileSystemTypes_() {
