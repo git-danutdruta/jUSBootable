@@ -21,9 +21,9 @@ public enum FileSystemType {
     V_FAT_NIX(OperatingSystem.LINUX, "mkfs.vfat", "V_FAT"),
     NTFS_NIX(OperatingSystem.LINUX, "mkfs.ntfs", "NTFS");
 
-    private String description;
-    private OperatingSystem os;
-    private String utilityProcess;
+    private final String description;
+    private final OperatingSystem os;
+    private final String utilityProcess;
 
 
     FileSystemType(OperatingSystem os, String utilityProcess, String description) {
@@ -61,6 +61,14 @@ public enum FileSystemType {
 
     public OperatingSystem getOs() {
         return os;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getUtilityProcess() {
+        return utilityProcess;
     }
 
     @Override
