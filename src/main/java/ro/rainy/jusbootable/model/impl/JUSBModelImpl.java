@@ -54,7 +54,7 @@ public class JUSBModelImpl implements JUSBModel {
         usbComboModel = new BComboModelImpl<>();
         partitionSchemeComboModel = new BComboModelImpl<>(PartitionSchemeType.values());
         targetSystemComboModel = new BComboModelImpl<>(TargetSystemType.values());
-        fileSystemTypeComboModel = new BComboModelImpl<>( FileSystemType.getFileSystemTypes());
+        fileSystemTypeComboModel = new BComboModelImpl<>(FileSystemType.getFileSystemTypes());
         clusterComboModel = new BComboModelImpl<>(ClusterSize.values());
         fileChooserModel = new BFileChooserModelImpl();
         progressBarRangeModel = new BProgressBarBoundedRangeModelImpl();
@@ -176,7 +176,7 @@ public class JUSBModelImpl implements JUSBModel {
             exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
             return;
         }
-
+        FileSystemType fileSystemType = (FileSystemType) fileSystemTypeComboModel.getSelectedItem();
 
         // -- Linux --
 
@@ -189,7 +189,7 @@ public class JUSBModelImpl implements JUSBModel {
             String deviceIndicativ = selectedDrive.getDevice();
             int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
             if (umountCode == 0) {
-                int mkfsVFatCode = executeProcess("Formatting drive", "mkfs.vfat", deviceIndicativ);
+                int mkfsVFatCode = executeProcess("Formatting drive", fileSystemType.getUtilityProcess(), deviceIndicativ);
                 if (mkfsVFatCode == 0) {
                     int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
                             String.format("if=%s", file.getAbsolutePath()),
