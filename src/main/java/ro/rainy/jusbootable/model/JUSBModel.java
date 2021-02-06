@@ -45,7 +45,7 @@ public interface JUSBModel {
 
     void checkDeviceListForUpdates();
 
-//    void preStageMakeUSBootable();
+    void preStageMakeUSBootable();
 
     void makeUSBootable();
 
