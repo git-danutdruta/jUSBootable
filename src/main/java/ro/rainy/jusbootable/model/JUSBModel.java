@@ -1,9 +1,6 @@
 package ro.rainy.jusbootable.model;
 
-import ro.rainy.jusbootable.handler.ExceptionThrownHandler;
-import ro.rainy.jusbootable.handler.InfoDataHandler;
-import ro.rainy.jusbootable.handler.UpdateSelectionHandler;
-import ro.rainy.jusbootable.handler.VisibilityChangeHandler;
+import ro.rainy.jusbootable.handler.*;
 import ro.rainy.jusbootable.model.domain.*;
 
 import java.awt.image.BufferedImage;
@@ -17,6 +14,8 @@ public interface JUSBModel {
     void whenExceptionThrown(ExceptionThrownHandler exceptionThrownHandler);
 
     void whenInfoSend(InfoDataHandler infoDataHandler);
+
+    void whenInteractionDialogPopUp(InteractingDataHandler interactingDataHandler);
 
     void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler);
 
@@ -45,6 +44,8 @@ public interface JUSBModel {
     void updateSelection();
 
     void checkDeviceListForUpdates();
+
+//    void preStageMakeUSBootable();
 
     void makeUSBootable();
 
