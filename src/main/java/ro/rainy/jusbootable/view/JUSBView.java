@@ -19,6 +19,8 @@ public interface JUSBView extends Structure {
 
     void showInfo(String message);
 
+    int showConfirmation(String message);
+
     void setVisible(boolean visible);
 
     void setBootSelectionFileChooserVisible();
