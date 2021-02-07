@@ -185,6 +185,11 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
     }
 
     @Override
+    public int showConfirmation(String message) {
+        return JOptionPane.showConfirmDialog(this, message,"Be aware", JOptionPane.OK_CANCEL_OPTION);
+    }
+
+    @Override
     public void setBootSelectionTxt(String fileName) {
         bootSelectionTxt.setText(fileName);
     }
