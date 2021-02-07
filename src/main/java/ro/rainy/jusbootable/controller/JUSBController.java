@@ -24,8 +24,13 @@ public class JUSBController {
 
         model.whenVisibilityChange(() -> view.setVisible(model.isFrameVisible()));
         model.whenSelectionChange(view::setBootSelectionTxt);
+        model.whenInteractionDialogPopUp(message -> {
+            if (view.showConfirmation(message) == 0) {
+                model.makeUSBootable();
+            }
+        });
 
-        view.whenUserClickStartButton(model::makeUSBootable);
+        view.whenUserClickStartButton(model::preStageMakeUSBootable);
         view.whenUserClickCloseButton(model::prepareExit);
         view.whenUserClickBootSelectionButton(view::setBootSelectionFileChooserVisible);
         view.whenFileChooserSelectionChange(model::updateSelection);
