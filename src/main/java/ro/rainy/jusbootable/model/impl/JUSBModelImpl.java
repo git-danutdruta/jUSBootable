@@ -5,10 +5,7 @@ import net.samuelcampos.usbdrivedetector.events.DeviceEventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.rainy.jusbootable.dispatcher.EventDispatcher;
-import ro.rainy.jusbootable.handler.ExceptionThrownHandler;
-import ro.rainy.jusbootable.handler.InfoDataHandler;
-import ro.rainy.jusbootable.handler.UpdateSelectionHandler;
-import ro.rainy.jusbootable.handler.VisibilityChangeHandler;
+import ro.rainy.jusbootable.handler.*;
 import ro.rainy.jusbootable.model.BComboModel;
 import ro.rainy.jusbootable.model.BFileChooserModel;
 import ro.rainy.jusbootable.model.BProgressBarBoundedRangeModel;
@@ -24,6 +21,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
  * @proiect: jUSBootable
@@ -36,6 +34,7 @@ public class JUSBModelImpl implements JUSBModel {
     private final EventDispatcher<VisibilityChangeHandler> visibilityChangeHandlerEventDispatcher;
     private final EventDispatcher<ExceptionThrownHandler> exceptionThrownHandlerEventDispatcher;
     private final EventDispatcher<InfoDataHandler> infoDataHandlerEventDispatcher;
+    private final EventDispatcher<InteractingDataHandler> interactivHandlerEventDispatcher;
     private final EventDispatcher<UpdateSelectionHandler> updateSelectionEventDispatcher;
     private final BComboModel<FlashDrive> usbComboModel;
     private final BComboModel<PartitionSchemeType> partitionSchemeComboModel;
@@ -51,6 +50,7 @@ public class JUSBModelImpl implements JUSBModel {
         infoDataHandlerEventDispatcher = new EventDispatcher<>("pushDataToGUI");
         visibilityChangeHandlerEventDispatcher = new EventDispatcher<>("visibilityChange");
         updateSelectionEventDispatcher = new EventDispatcher<>("updateSelection");
+        interactivHandlerEventDispatcher = new EventDispatcher<>("interactMessage");
         usbComboModel = new BComboModelImpl<>();
         partitionSchemeComboModel = new BComboModelImpl<>(PartitionSchemeType.values());
         targetSystemComboModel = new BComboModelImpl<>(TargetSystemType.values());
@@ -73,6 +73,11 @@ public class JUSBModelImpl implements JUSBModel {
     @Override
     public void whenInfoSend(InfoDataHandler infoDataHandler) {
         infoDataHandlerEventDispatcher.addListener(infoDataHandler);
+    }
+
+    @Override
+    public void whenInteractionDialogPopUp(InteractingDataHandler interactingDataHandler) {
+        interactivHandlerEventDispatcher.addListener(interactingDataHandler);
     }
 
     @Override
@@ -164,65 +169,71 @@ public class JUSBModelImpl implements JUSBModel {
     }
 
     @Override
+    public void preStageMakeUSBootable() {
+        interactivHandlerEventDispatcher.dispatch("Are you sure you want to perform this action?\nProcess will erase all data from the flash drive.");
+    }
+
+    @Override
     public void makeUSBootable() {
-        //todo check if file is set
-        FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
-        if (selectedDrive == null) {
-            exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
-            return;
-        }
-        File file = fileChooserModel.getSelectedFile();
-        if (file == null) {
-            exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
-            return;
-        }
-        FileSystemType fileSystemType = (FileSystemType) fileSystemTypeComboModel.getSelectedItem();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
+            if (selectedDrive == null) {
+                exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
+                return;
+            }
+            File file = fileChooserModel.getSelectedFile();
+            if (file == null) {
+                exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
+                return;
+            }
+            FileSystemType fileSystemType = (FileSystemType) fileSystemTypeComboModel.getSelectedItem();
 
-        // -- Linux --
+            // -- Linux --
 
-        // Run a shell command
-        //umount
-        //mkfs.vfat
-        //sudo dd bs=4M if=path/to/input.iso of=/dev/sd<?> conv=fdatasync  status=progress
+            // Run a shell command
+            //umount
+            //mkfs.vfat
+            //sudo dd bs=4M if=path/to/input.iso of=/dev/sd<?> conv=fdatasync  status=progress
 
-        try {
-            String deviceIndicativ = selectedDrive.getDevice();
-            int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
-            if (umountCode == 0) {
-                int mkfsVFatCode = executeProcess("Formatting drive", fileSystemType.getUtilityProcess(), deviceIndicativ);
-                if (mkfsVFatCode == 0) {
-                    int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
-                            String.format("if=%s", file.getAbsolutePath()),
-                            String.format("of=%s", deviceIndicativ),
-                            "status=progress");
-                    if (ddCode == 0) {
-                        progressBarRangeModel.setValue(100);
-                        infoDataHandlerEventDispatcher.dispatch("Operation successful");
+            progressBarRangeModel.setValue(20);
+            try {
+                String deviceIndicativ = selectedDrive.getDevice();
+                int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
+                if (umountCode == 0) {
+                    int mkfsVFatCode = executeProcess("Formatting drive", fileSystemType.getUtilityProcess(), deviceIndicativ);
+                    if (mkfsVFatCode == 0) {
+                        int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
+                                String.format("if=%s", file.getAbsolutePath()),
+                                String.format("of=%s", deviceIndicativ),
+                                "status=progress");
+                        if (ddCode == 0) {
+                            progressBarRangeModel.setValue(100);
+                            infoDataHandlerEventDispatcher.dispatch("Operation successful");
+                        } else {
+                            infoDataHandlerEventDispatcher.dispatch("Cannot create bootable flash drive");
+                        }
                     } else {
-                        infoDataHandlerEventDispatcher.dispatch("Cannot create bootable flash drive");
+                        infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Run application as administrator!");
                     }
                 } else {
-                    infoDataHandlerEventDispatcher.dispatch("Cannot format the flash drive\n Run application as administrator!");
+                    infoDataHandlerEventDispatcher.dispatch("Cannot unmount the flash drive");
                 }
-            } else {
-                infoDataHandlerEventDispatcher.dispatch("Cannot unmount the flash drive");
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                exceptionThrownHandlerEventDispatcher.dispatch(e);
             }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            exceptionThrownHandlerEventDispatcher.dispatch(e);
-        }
 
-        // Run a shell script
-        //processBuilder.command("path/to/hello.sh");
+            // Run a shell script
+            //processBuilder.command("path/to/hello.sh");
 
-        // -- Windows --
+            // -- Windows --
 
-        // Run a command
-        //processBuilder.command("cmd.exe", "/c", "dir C:\\Users\\dd");
+            // Run a command
+            //processBuilder.command("cmd.exe", "/c", "dir C:\\Users\\dd");
 
-        // Run a bat file
-        //processBuilder.command("C:\\Users\\Daniel\\dd.bat");
-
+            // Run a bat file
+            //processBuilder.command("C:\\Users\\Daniel\\dd.bat");
+        });
     }
 
     private int executeProcess(String processAlias, String... args) throws IOException, InterruptedException {
