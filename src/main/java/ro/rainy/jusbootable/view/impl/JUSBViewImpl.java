@@ -6,6 +6,7 @@ import ro.rainy.jusbootable.handler.SelectionChangeHandler;
 import ro.rainy.jusbootable.model.BComboModel;
 import ro.rainy.jusbootable.model.BFileChooserModel;
 import ro.rainy.jusbootable.model.BProgressBarBoundedRangeModel;
+import ro.rainy.jusbootable.model.BTextDocumentModel;
 import ro.rainy.jusbootable.model.domain.*;
 import ro.rainy.jusbootable.view.JUSBView;
 import ro.rainy.jusbootable.view.component.BFileChooser;
@@ -258,5 +259,10 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
     @Override
     public void setProgressBarModel(BProgressBarBoundedRangeModel boundedRangeModel) {
         progressBar.setModel(boundedRangeModel);
+    }
+
+    @Override
+    public void setVolumeTextModel(BTextDocumentModel textModel) {
+        volumeNameTxt.getDocument().addDocumentListener(textModel);
     }
 }
