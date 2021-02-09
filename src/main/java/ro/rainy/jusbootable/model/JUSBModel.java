@@ -39,6 +39,8 @@ public interface JUSBModel {
 
     BProgressBarBoundedRangeModel getProgressBarModel();
 
+    BTextDocumentModel getVolumeTextDocModel();
+
     BufferedImage getLogo();
 
     void updateSelection();
