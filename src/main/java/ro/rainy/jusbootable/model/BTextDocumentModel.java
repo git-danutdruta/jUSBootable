@@ -8,5 +8,5 @@ import javax.swing.event.DocumentListener;
  * @time: 08/02/2021  21:48
  */
 public interface BTextDocumentModel extends DocumentListener {
-
+    String getText();
 }
