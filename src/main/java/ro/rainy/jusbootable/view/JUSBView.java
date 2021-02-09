@@ -5,6 +5,7 @@ import ro.rainy.jusbootable.handler.SelectionChangeHandler;
 import ro.rainy.jusbootable.model.BComboModel;
 import ro.rainy.jusbootable.model.BFileChooserModel;
 import ro.rainy.jusbootable.model.BProgressBarBoundedRangeModel;
+import ro.rainy.jusbootable.model.BTextDocumentModel;
 import ro.rainy.jusbootable.model.domain.*;
 
 import java.awt.*;
@@ -44,6 +45,8 @@ public interface JUSBView extends Structure {
     void setFileChooserModel(BFileChooserModel fileChooserModel);
 
     void setProgressBarModel(BProgressBarBoundedRangeModel boundedRangeModel);
+
+    void setVolumeTextModel(BTextDocumentModel textModel);
 
 
     void whenUserClickStartButton(ButtonClickHandler startHandler);
