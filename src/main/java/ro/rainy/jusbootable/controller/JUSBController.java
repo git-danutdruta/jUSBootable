@@ -42,6 +42,7 @@ public class JUSBController {
         view.setClusterComboBoxModel(model.getClusterComboModel());
         view.setFileChooserModel(model.getFileChooserModel());
         view.setProgressBarModel(model.getProgressBarModel());
+        view.setVolumeTextModel(model.getVolumeTextDocModel());
 
 
         view.setIconImage(model.getLogo());
