@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.rainy.jusbootable.dispatcher.EventDispatcher;
 import ro.rainy.jusbootable.handler.*;
-import ro.rainy.jusbootable.model.BComboModel;
-import ro.rainy.jusbootable.model.BFileChooserModel;
-import ro.rainy.jusbootable.model.BProgressBarBoundedRangeModel;
-import ro.rainy.jusbootable.model.JUSBModel;
+import ro.rainy.jusbootable.model.*;
 import ro.rainy.jusbootable.model.domain.*;
 
 import javax.imageio.ImageIO;
@@ -43,6 +40,7 @@ public class JUSBModelImpl implements JUSBModel {
     private final BComboModel<ClusterSize> clusterComboModel;
     private final BFileChooserModel fileChooserModel;
     private final BProgressBarBoundedRangeModel progressBarRangeModel;
+    private final BTextDocumentModel volumeTextDocumentModel;
     private boolean frameVisible;
 
     public JUSBModelImpl() {
@@ -58,6 +56,7 @@ public class JUSBModelImpl implements JUSBModel {
         clusterComboModel = new BComboModelImpl<>(ClusterSize.values());
         fileChooserModel = new BFileChooserModelImpl();
         progressBarRangeModel = new BProgressBarBoundedRangeModelImpl();
+        volumeTextDocumentModel = new BTextDocumentModelImpl();
     }
 
     @Override
@@ -133,6 +132,10 @@ public class JUSBModelImpl implements JUSBModel {
         return progressBarRangeModel;
     }
 
+    @Override
+    public BTextDocumentModel getVolumeTextDocModel() {
+        return volumeTextDocumentModel;
+    }
 
     @Override
     public BufferedImage getLogo() {
@@ -170,12 +173,13 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void preStageMakeUSBootable() {
-        interactivHandlerEventDispatcher.dispatch("Are you sure you want to perform this action?\nProcess will erase all data from the flash drive.");
+        interactivHandlerEventDispatcher.dispatch("This process will erase all data from the flash drive.\nAre you sure you want to perform this action?");
     }
 
     @Override
     public void makeUSBootable() {
         Executors.newSingleThreadExecutor().execute(() -> {
+            System.out.println(volumeTextDocumentModel.getText());
             FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
             if (selectedDrive == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
