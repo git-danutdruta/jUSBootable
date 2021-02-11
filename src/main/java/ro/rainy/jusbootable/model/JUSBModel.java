@@ -33,7 +33,7 @@ public interface JUSBModel {
 
     BComboModel<FileSystemType> getFileSystemTypeComboModel();
 
-    BComboModel<ClusterSize> getClusterComboModel();
+    BComboModel<BSSize> getClusterComboModel();
 
     BFileChooserModel getFileChooserModel();
 
