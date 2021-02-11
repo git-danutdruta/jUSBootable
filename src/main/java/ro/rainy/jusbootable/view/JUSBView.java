@@ -40,7 +40,7 @@ public interface JUSBView extends Structure {
 
     void setFileSystemComboBoxModel(BComboModel<FileSystemType> fileSystemComboBoxModel);
 
-    void setClusterComboBoxModel(BComboModel<ClusterSize> fileSystemComboBoxModel);
+    void setClusterComboBoxModel(BComboModel<BSSize> fileSystemComboBoxModel);
 
     void setFileChooserModel(BFileChooserModel fileChooserModel);
 
