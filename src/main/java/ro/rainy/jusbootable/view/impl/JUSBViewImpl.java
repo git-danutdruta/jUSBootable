@@ -43,7 +43,7 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
     private JLabel clusterSizeLbl;
     private JTextField volumeNameTxt;
     private JComboBox<FileSystemType> fileSystemComboBox;
-    private JComboBox<ClusterSize> clusterSizeComboBox;
+    private JComboBox<BSSize> clusterSizeComboBox;
 
     private JPanel bottomPanel;
     private JProgressBar progressBar;
@@ -247,7 +247,7 @@ public class JUSBViewImpl extends JFrame implements JUSBView {
     }
 
     @Override
-    public void setClusterComboBoxModel(BComboModel<ClusterSize> fileSystemComboBoxModel) {
+    public void setClusterComboBoxModel(BComboModel<BSSize> fileSystemComboBoxModel) {
         clusterSizeComboBox.setModel(fileSystemComboBoxModel);
     }
 
