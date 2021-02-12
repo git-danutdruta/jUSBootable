@@ -15,9 +15,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 /**
@@ -37,7 +34,7 @@ public class JUSBModelImpl implements JUSBModel {
     private final BComboModel<PartitionSchemeType> partitionSchemeComboModel;
     private final BComboModel<TargetSystemType> targetSystemComboModel;
     private final BComboModel<FileSystemType> fileSystemTypeComboModel;
-    private final BComboModel<ClusterSize> clusterComboModel;
+    private final BComboModel<BSSize> clusterComboModel;
     private final BFileChooserModel fileChooserModel;
     private final BProgressBarBoundedRangeModel progressBarRangeModel;
     private final BTextDocumentModel volumeTextDocumentModel;
@@ -53,7 +50,7 @@ public class JUSBModelImpl implements JUSBModel {
         partitionSchemeComboModel = new BComboModelImpl<>(PartitionSchemeType.values());
         targetSystemComboModel = new BComboModelImpl<>(TargetSystemType.values());
         fileSystemTypeComboModel = new BComboModelImpl<>(FileSystemType.getFileSystemTypes());
-        clusterComboModel = new BComboModelImpl<>(ClusterSize.values());
+        clusterComboModel = new BComboModelImpl<>(BSSize.values());
         fileChooserModel = new BFileChooserModelImpl();
         progressBarRangeModel = new BProgressBarBoundedRangeModelImpl();
         volumeTextDocumentModel = new BTextDocumentModelImpl();
@@ -118,7 +115,7 @@ public class JUSBModelImpl implements JUSBModel {
     }
 
     @Override
-    public BComboModel<ClusterSize> getClusterComboModel() {
+    public BComboModel<BSSize> getClusterComboModel() {
         return clusterComboModel;
     }
 
