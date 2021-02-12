@@ -201,9 +201,10 @@ public class JUSBModelImpl implements JUSBModel {
                 String deviceIndicativ = selectedDrive.getDevice();
                 int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
                 if (umountCode == 0) {
-                    int mkfsVFatCode = executeProcess("Formatting drive", fileSystemType.getUtilityProcess(), deviceIndicativ);
+                    int mkfsVFatCode = executeProcess("Formatting drive", fileSystemType.getUtilityProcess(), "-n", volumeTextDocumentModel.getText(), deviceIndicativ);
                     if (mkfsVFatCode == 0) {
-                        int ddCode = executeProcess("Disk d.", "dd", "bs=4M",
+                        int ddCode = executeProcess("Disk dump", "dd",
+                                String.format("bs=%s", ((BSSize) clusterComboModel.getSelectedItem()).getBytes()),
                                 String.format("if=%s", file.getAbsolutePath()),
                                 String.format("of=%s", deviceIndicativ),
                                 "status=progress");
