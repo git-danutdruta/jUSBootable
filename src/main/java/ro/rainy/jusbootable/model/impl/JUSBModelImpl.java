@@ -149,7 +149,13 @@ public class JUSBModelImpl implements JUSBModel {
     public void updateSelection() {
         File file = fileChooserModel.getSelectedFile();
         if (file != null) {
-//            String volumeNameByISOFile= execProcess("isoinfo", "-d" -i linuxmint-20.1-cinnamon-64bit.iso | sed -n 's/Volume id: //p'");
+            try {
+                String volumeNameByISOFile = execProcess("isoinfo", "-d", "-i", file.getAbsolutePath(), "|", "sed", "-n", "'s/Volume id: //p'").getStreamResult();
+                System.out.println(volumeNameByISOFile);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                LOG.error("", e);
+            }
             updateSelectionEventDispatcher.dispatch(file.getName());
         }
     }
@@ -254,7 +260,7 @@ public class JUSBModelImpl implements JUSBModel {
         return exitCode;
     }
 
-    private ProcessResult execProcess(String ... args) throws IOException, InterruptedException {
+    private ProcessResult execProcess(String... args) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command(args);
         Process process = processBuilder.start();
