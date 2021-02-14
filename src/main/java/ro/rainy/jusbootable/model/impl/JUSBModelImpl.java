@@ -149,6 +149,7 @@ public class JUSBModelImpl implements JUSBModel {
     public void updateSelection() {
         File file = fileChooserModel.getSelectedFile();
         if (file != null) {
+//            String volumeNameByISOFile= execProcess("isoinfo", "-d" -i linuxmint-20.1-cinnamon-64bit.iso | sed -n 's/Volume id: //p'");
             updateSelectionEventDispatcher.dispatch(file.getName());
         }
     }
@@ -247,10 +248,24 @@ public class JUSBModelImpl implements JUSBModel {
         while ((line = reader.readLine()) != null) {
             LOG.debug(line);
         }
-        int exitVal = process.waitFor();
-        LOG.debug("{} ended with code {}", processAlias, exitVal);
+        int exitCode = process.waitFor();
+        LOG.debug("{} ended with code {}", processAlias, exitCode);
 
-        return exitVal;
+        return exitCode;
+    }
+
+    private ProcessResult execProcess(String ... args) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command(args);
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        int exitCode = process.waitFor();
+        return new ProcessResult(sb.toString(), exitCode);
     }
 
     @Override
@@ -258,5 +273,23 @@ public class JUSBModelImpl implements JUSBModel {
         LOG.info("Shutdown signal ...");
         LOG.debug("======================================================\n");
         System.exit(0);
+    }
+
+    class ProcessResult {
+        private String streamResult;
+        private int resultCode;
+
+        public ProcessResult(String streamResult, int resultCode) {
+            this.streamResult = streamResult;
+            this.resultCode = resultCode;
+        }
+
+        public String getStreamResult() {
+            return streamResult;
+        }
+
+        public int getResultCode() {
+            return resultCode;
+        }
     }
 }
