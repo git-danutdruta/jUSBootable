@@ -19,6 +19,8 @@ public interface JUSBModel {
 
     void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler);
 
+    void whenVolumeNameChange(UpdateSelectionHandler updateVolumeNameHandler);
+
     void whenVisibilityChange(VisibilityChangeHandler visibilityChangeHandler);
 
     void setVisible(boolean visible);
