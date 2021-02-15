@@ -6,5 +6,5 @@ package ro.rainy.jusbootable.handler;
  * @data: 17/12/2020__21:56
  */
 public interface UpdateSelectionHandler {
-    void updateSelection(String fileName);
+    void updateSelection(String name);
 }
