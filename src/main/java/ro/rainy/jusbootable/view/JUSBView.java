@@ -32,6 +32,8 @@ public interface JUSBView extends Structure {
 
     void setBootSelectionTxt(String fileName);
 
+    void setVolumeLabelTxt(String volumeName);
+
     void setUSBComboBoxModel(BComboModel<FlashDrive> usbComboBoxModel);
 
     void setPartitionSchemeComboBoxModel(BComboModel<PartitionSchemeType> partitionSchemeTypeComboModel);
