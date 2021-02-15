@@ -29,6 +29,7 @@ public class JUSBController {
                 model.makeUSBootable();
             }
         });
+        model.whenVolumeNameChange(view::setVolumeLabelTxt);
 
         view.whenUserClickStartButton(model::preStageMakeUSBootable);
         view.whenUserClickCloseButton(model::prepareExit);
