@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @proiect: jUSBootable
@@ -150,8 +152,13 @@ public class JUSBModelImpl implements JUSBModel {
         File file = fileChooserModel.getSelectedFile();
         if (file != null) {
             try {
-                String volumeNameByISOFile = execProcess("isoinfo", "-d", "-i", file.getAbsolutePath(), "|", "sed", "-n", "'s/Volume id: //p'").getStreamResult();
-                System.out.println(volumeNameByISOFile);
+                String volumeNameByISOFile = execProcess("isoinfo", "-d", "-i", file.getAbsolutePath()).getStreamResult();
+
+                Pattern pattern = Pattern.compile("(?<=\\Volume id:).*");
+                Matcher matcher = pattern.matcher(volumeNameByISOFile);
+                if (matcher.find()) {
+                    String volumeId = matcher.group();
+                }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 LOG.error("", e);
@@ -268,7 +275,7 @@ public class JUSBModelImpl implements JUSBModel {
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
-            sb.append(line);
+            sb.append(line).append("\n");
         }
         int exitCode = process.waitFor();
         return new ProcessResult(sb.toString(), exitCode);
