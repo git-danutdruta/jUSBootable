@@ -164,7 +164,7 @@ public class JUSBModelImpl implements JUSBModel {
                 Pattern pattern = Pattern.compile("(?<=\\Volume id:).*");
                 Matcher matcher = pattern.matcher(volumeNameByISOFile);
                 if (matcher.find()) {
-                    String volumeId = matcher.group();
+                    String volumeId = matcher.group().trim();
                     LOG.debug("Volume id: {}", volumeId);
                     volumeNameChangeEventDispatcher.dispatch(volumeId);
                 }
