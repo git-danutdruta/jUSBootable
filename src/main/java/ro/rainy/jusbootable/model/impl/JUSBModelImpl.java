@@ -1,6 +1,5 @@
 package ro.rainy.jusbootable.model.impl;
 
-import com.sun.tools.sjavac.Log;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.events.DeviceEventType;
 import org.slf4j.Logger;
