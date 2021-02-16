@@ -1,5 +1,6 @@
 package ro.rainy.jusbootable.model.impl;
 
+import com.sun.tools.sjavac.Log;
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager;
 import net.samuelcampos.usbdrivedetector.events.DeviceEventType;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void whenVolumeNameChange(UpdateSelectionHandler updateVolumeNameHandler) {
-
+        volumeNameChangeEventDispatcher.addListener(updateVolumeNameHandler);
     }
 
     @Override
@@ -165,6 +166,8 @@ public class JUSBModelImpl implements JUSBModel {
                 Matcher matcher = pattern.matcher(volumeNameByISOFile);
                 if (matcher.find()) {
                     String volumeId = matcher.group();
+                    LOG.debug("Volume id: {}", volumeId);
+                    volumeNameChangeEventDispatcher.dispatch(volumeId);
                 }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
