@@ -32,6 +32,7 @@ public class JUSBModelImpl implements JUSBModel {
     private final EventDispatcher<InfoDataHandler> infoDataHandlerEventDispatcher;
     private final EventDispatcher<InteractingDataHandler> interactivHandlerEventDispatcher;
     private final EventDispatcher<UpdateSelectionHandler> updateSelectionEventDispatcher;
+    private final EventDispatcher<UpdateSelectionHandler> volumeNameChangeEventDispatcher;
     private final BComboModel<FlashDrive> usbComboModel;
     private final BComboModel<PartitionSchemeType> partitionSchemeComboModel;
     private final BComboModel<TargetSystemType> targetSystemComboModel;
@@ -81,6 +82,11 @@ public class JUSBModelImpl implements JUSBModel {
     @Override
     public void whenSelectionChange(UpdateSelectionHandler updateSelectionHandler) {
         updateSelectionEventDispatcher.addListener(updateSelectionHandler);
+    }
+
+    @Override
+    public void whenVolumeNameChange(UpdateSelectionHandler updateVolumeNameHandler) {
+
     }
 
     @Override
