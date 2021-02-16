@@ -30,7 +30,7 @@ public class JUSBModelImpl implements JUSBModel {
     private final EventDispatcher<VisibilityChangeHandler> visibilityChangeHandlerEventDispatcher;
     private final EventDispatcher<ExceptionThrownHandler> exceptionThrownHandlerEventDispatcher;
     private final EventDispatcher<InfoDataHandler> infoDataHandlerEventDispatcher;
-    private final EventDispatcher<InteractingDataHandler> interactivHandlerEventDispatcher;
+    private final EventDispatcher<InteractingDataHandler> interactingHandlerEventDispatcher;
     private final EventDispatcher<UpdateSelectionHandler> updateSelectionEventDispatcher;
     private final EventDispatcher<UpdateSelectionHandler> volumeNameChangeEventDispatcher;
     private final BComboModel<FlashDrive> usbComboModel;
@@ -48,7 +48,8 @@ public class JUSBModelImpl implements JUSBModel {
         infoDataHandlerEventDispatcher = new EventDispatcher<>("pushDataToGUI");
         visibilityChangeHandlerEventDispatcher = new EventDispatcher<>("visibilityChange");
         updateSelectionEventDispatcher = new EventDispatcher<>("updateSelection");
-        interactivHandlerEventDispatcher = new EventDispatcher<>("interactMessage");
+        volumeNameChangeEventDispatcher = new EventDispatcher<>("updateSelection");
+        interactingHandlerEventDispatcher = new EventDispatcher<>("interactMessage");
         usbComboModel = new BComboModelImpl<>();
         partitionSchemeComboModel = new BComboModelImpl<>(PartitionSchemeType.values());
         targetSystemComboModel = new BComboModelImpl<>(TargetSystemType.values());
@@ -76,7 +77,7 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void whenInteractionDialogPopUp(InteractingDataHandler interactingDataHandler) {
-        interactivHandlerEventDispatcher.addListener(interactingDataHandler);
+        interactingHandlerEventDispatcher.addListener(interactingDataHandler);
     }
 
     @Override
@@ -190,7 +191,7 @@ public class JUSBModelImpl implements JUSBModel {
 
     @Override
     public void preStageMakeUSBootable() {
-        interactivHandlerEventDispatcher.dispatch("This process will erase all data from the flash drive.\nAre you sure you want to perform this action?");
+        interactingHandlerEventDispatcher.dispatch("This process will erase all data from the flash drive.\nAre you sure you want to perform this action?");
     }
 
     @Override
