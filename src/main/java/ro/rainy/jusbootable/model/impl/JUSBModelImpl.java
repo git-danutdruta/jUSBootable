@@ -199,7 +199,6 @@ public class JUSBModelImpl implements JUSBModel {
     @Override
     public void makeUSBootable() {
         Executors.newSingleThreadExecutor().execute(() -> {
-            System.out.println(volumeTextDocumentModel.getText());
             FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
             if (selectedDrive == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
