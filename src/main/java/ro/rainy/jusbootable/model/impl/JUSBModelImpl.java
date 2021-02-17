@@ -219,6 +219,7 @@ public class JUSBModelImpl implements JUSBModel {
             //sudo dd bs=4M if=path/to/input.iso of=/dev/sd<?> conv=fdatasync  status=progress
 
             progressBarRangeModel.setValue(20);
+            //todo disable buttons
             try {
                 String deviceIndicativ = selectedDrive.getDevice();
                 int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
@@ -246,7 +247,7 @@ public class JUSBModelImpl implements JUSBModel {
                 e.printStackTrace();
                 exceptionThrownHandlerEventDispatcher.dispatch(e);
             }
-
+            //todo enable buttons
             // Run a shell script
             //processBuilder.command("path/to/hello.sh");
 
@@ -296,9 +297,9 @@ public class JUSBModelImpl implements JUSBModel {
         System.exit(0);
     }
 
-    class ProcessResult {
-        private String streamResult;
-        private int resultCode;
+    static class ProcessResult {
+        private final String streamResult;
+        private final int resultCode;
 
         public ProcessResult(String streamResult, int resultCode) {
             this.streamResult = streamResult;

@@ -9,4 +9,5 @@ It looks like this:
 ![alt text](https://github.com/git-danutdruta/jUSBootable/blob/master/static/ss.png)
 
 For the moment we have a stable version for Linux.
+
 Be aware and RUN it as ADMINISTRATOR !!!
