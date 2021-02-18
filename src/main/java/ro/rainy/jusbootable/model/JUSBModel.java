@@ -21,7 +21,7 @@ public interface JUSBModel {
 
     void whenVolumeNameChange(UpdateSelectionHandler updateVolumeNameHandler);
 
-    void whenStartEnableChange(EnableChangeHandler enableChangeHandler);
+    void whenStartEnableChange(EnableStateChangeHandler enableStateChangeHandler);
 
     void whenVisibilityChange(VisibilityChangeHandler visibilityChangeHandler);
 
