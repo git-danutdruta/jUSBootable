@@ -5,6 +5,6 @@ package ro.rainy.jusbootable.handler;
  * @author: daniel
  * @time: 17/02/2021  18:12
  */
-public interface EnableChangeHandler {
+public interface EnableStateChangeHandler {
     void enable(boolean marker);
 }
