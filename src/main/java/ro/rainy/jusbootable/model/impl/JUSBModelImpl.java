@@ -206,15 +206,15 @@ public class JUSBModelImpl implements JUSBModel {
     public void makeUSBootable() {
         Executors.newSingleThreadExecutor().execute(() -> {
             FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
-            /*if (selectedDrive == null) {
+            if (selectedDrive == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
                 return;
-            }*/
+            }
             File file = fileChooserModel.getSelectedFile();
-            /*if (file == null) {
+            if (file == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
                 return;
-            }*/
+            }
             FileSystemType fileSystemType = (FileSystemType) fileSystemTypeComboModel.getSelectedItem();
 
             // -- Linux --
