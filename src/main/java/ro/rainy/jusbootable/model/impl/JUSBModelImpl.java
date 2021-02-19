@@ -155,7 +155,6 @@ public class JUSBModelImpl implements JUSBModel {
         try {
             return ImageIO.read(new File("static/logo.png"));
         } catch (IOException e) {
-//            LOG.error(e.getMessage());
             exceptionThrownHandlerEventDispatcher.dispatch(e);
         }
         return null;
@@ -207,15 +206,15 @@ public class JUSBModelImpl implements JUSBModel {
     public void makeUSBootable() {
         Executors.newSingleThreadExecutor().execute(() -> {
             FlashDrive selectedDrive = (FlashDrive) usbComboModel.getSelectedItem();
-            if (selectedDrive == null) {
+            /*if (selectedDrive == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("There's no flash drive selected/inserted "));
                 return;
-            }
+            }*/
             File file = fileChooserModel.getSelectedFile();
-            if (file == null) {
+            /*if (file == null) {
                 exceptionThrownHandlerEventDispatcher.dispatch(new Exception("A valid file should be selected"));
                 return;
-            }
+            }*/
             FileSystemType fileSystemType = (FileSystemType) fileSystemTypeComboModel.getSelectedItem();
 
             // -- Linux --
@@ -226,7 +225,7 @@ public class JUSBModelImpl implements JUSBModel {
             //sudo dd bs=4M if=path/to/input.iso of=/dev/sd<?> conv=fdatasync  status=progress
 
             progressBarRangeModel.setValue(20);
-            //todo disable buttons
+            disableButtons();
             try {
                 String deviceIndicativ = selectedDrive.getDevice();
                 int umountCode = executeProcess("Unmounting drive", "umount", deviceIndicativ);
@@ -254,7 +253,7 @@ public class JUSBModelImpl implements JUSBModel {
                 e.printStackTrace();
                 exceptionThrownHandlerEventDispatcher.dispatch(e);
             }
-            //todo enable buttons
+            enableButtons();
             // Run a shell script
             //processBuilder.command("path/to/hello.sh");
 
@@ -266,6 +265,14 @@ public class JUSBModelImpl implements JUSBModel {
             // Run a bat file
             //processBuilder.command("C:\\Users\\Daniel\\dd.bat");
         });
+    }
+
+    void enableButtons() {
+        startChangeEventDispatcher.dispatch(true);
+    }
+
+    void disableButtons() {
+        startChangeEventDispatcher.dispatch(false);
     }
 
     private int executeProcess(String processAlias, String... args) throws IOException, InterruptedException {
