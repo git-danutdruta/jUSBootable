@@ -30,6 +30,7 @@ public class JUSBController {
             }
         });
         model.whenVolumeNameChange(view::setVolumeLabelTxt);
+        model.whenStartEnableChange(view::setStartBtnEnables);
 
         view.whenUserClickStartButton(model::preStageMakeUSBootable);
         view.whenUserClickCloseButton(model::prepareExit);
