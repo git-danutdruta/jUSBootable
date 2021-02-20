@@ -14,4 +14,4 @@ For the moment we have a stable version for Linux.
 ```shell
 sudo java -jar jUSBootable-1.0-SNAPSHOT.jar
 ```
-Be aware and RUN it as ADMINISTRATOR !!!
+Be aware and RUN it as ADMINISTRATOR, otherwise you'll receive errors !!!
