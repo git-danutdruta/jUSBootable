@@ -1,0 +1,1 @@
+java -jar target/jUSBootable-1.0-SNAPSHOT.jar
