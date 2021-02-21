@@ -11,6 +11,7 @@ It looks like this:
 For the moment we have a stable version for Linux.
 
 #Linux
+
 ```shell
 sudo java -jar jUSBootable-1.0-SNAPSHOT.jar
 ```
